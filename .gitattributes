@@ -1,0 +1,10 @@
+# Keep what only matters while developing the package out of what a project installs.
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.php-cs-fixer.php export-ignore
+/.php-version export-ignore
+/phpstan.dist.neon export-ignore
+/phpunit.dist.xml export-ignore
+/tests export-ignore

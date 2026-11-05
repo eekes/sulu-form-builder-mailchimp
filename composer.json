@@ -1,0 +1,60 @@
+{
+    "name": "eekes/sulu-form-builder-mailchimp",
+    "type": "symfony-bundle",
+    "description": "Mailchimp integration for eekes/sulu-form-builder-bundle: subscribe form submissions to an audience, with merge fields, tags and double opt-in",
+    "keywords": ["sulu", "sulu-bundle", "forms", "form-builder", "mailchimp", "newsletter"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ewald Vanderveken",
+            "email": "vandervekenewald@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "eekes/sulu-form-builder-bundle": "^0.1@dev",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/http-client": "^7.4",
+        "symfony/http-kernel": "^7.4"
+    },
+    "require-dev": {
+        "php-cs-fixer/shim": "^3.58",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eekes\\Sulu\\FormBuilderMailchimpBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eekes\\Sulu\\FormBuilderMailchimpBundle\\Tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../bundle"
+        }
+    ],
+    "scripts": {
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse --memory-limit=1G",
+        "test": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true,
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

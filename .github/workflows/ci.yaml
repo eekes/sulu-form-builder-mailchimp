@@ -1,0 +1,61 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+jobs:
+    test:
+        name: 'PHP ${{ matrix.php-version }} (${{ matrix.dependency-versions }})'
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version: ['8.3', '8.4']
+                dependency-versions: ['highest']
+                include:
+                    - php-version: '8.3'
+                      dependency-versions: 'lowest'
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '${{ matrix.php-version }}'
+                  extensions: ctype, iconv, intl, mbstring
+                  coverage: none
+                  tools: composer:v2
+
+            # The path repository only exists in the development workspace.
+            - run: composer config --unset repositories.0
+
+            - uses: ramsey/composer-install@v3
+              with:
+                  dependency-versions: '${{ matrix.dependency-versions }}'
+
+            - run: vendor/bin/phpunit
+
+    static-analysis:
+        name: 'Static analysis and coding standard'
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  extensions: ctype, iconv, intl, mbstring
+                  coverage: none
+                  tools: composer:v2
+
+            - run: composer config --unset repositories.0
+
+            - uses: ramsey/composer-install@v3
+
+            - run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+
+            - run: vendor/bin/php-cs-fixer fix --dry-run --diff
