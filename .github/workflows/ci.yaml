@@ -29,8 +29,11 @@ jobs:
                   coverage: none
                   tools: composer:v2
 
-            # The path repository only exists in the development workspace.
-            - run: composer config --unset repositories.0
+            # The path repository only exists in the development workspace;
+            # the bundle is not on Packagist yet, so take it from GitHub.
+            - run: |
+                  composer config --unset repositories
+                  composer config repositories.bundle vcs https://github.com/eekes/sulu-form-builder-bundle
 
             - uses: ramsey/composer-install@v3
               with:
@@ -52,7 +55,9 @@ jobs:
                   coverage: none
                   tools: composer:v2
 
-            - run: composer config --unset repositories.0
+            - run: |
+                  composer config --unset repositories
+                  composer config repositories.bundle vcs https://github.com/eekes/sulu-form-builder-bundle
 
             - uses: ramsey/composer-install@v3
 
